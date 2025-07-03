@@ -1,0 +1,19 @@
+
+services:
+  - type: web
+    name: backend-remoto
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn src.main:app"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+    plan: free
+    autoDeploy: true
+    rootDir: src/backend
+
+  - type: static
+    name: frontend-remoto
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: dist
+    rootDir: src/frontend
